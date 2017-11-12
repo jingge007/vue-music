@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    <listview :data="singers"></listview>
+    <listview @select="selectSinger" :data="singers"></listview>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -8,6 +9,7 @@
   import {getSingerList} from 'api/singer'
   import Singer from 'common/js/singer'     // 这是Singer封装的一个对象类
   import listview from 'base/listview/listview'
+  import {mapMutations} from 'vuex'
 
   const HOT_NAME = '热门'
   const HOT_SINGER_LEN = 10
@@ -22,6 +24,12 @@
       this._getSingerList()
     },
     methods: {
+      selectSinger(singer) {
+        this.$router.push({
+          path: `/singer/${singer.id}`
+        })
+        this.setSinger(singer)
+      },
       _getSingerList() {
         getSingerList().then((res) => {
           if (res.code === ERR_OK) {
@@ -70,10 +78,13 @@
         ret.sort((a, b) => {   // sort() 方法用于对数组的元素进行排序, charCodeAt() 方法可返回指定位置的字符的 Unicode 编码
           return a.title.charCodeAt(0) - b.title.charCodeAt(0)
         })
-        console.log(hot.concat(ret))
-       // return hot.concat(ret)
+        // console.log(hot.concat(ret))
+        // return hot.concat(ret)
         this.singers = hot.concat(ret)  // concat() 方法用于连接两个或多个数组
-      }
+      },
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+      })
     },
     components: {
       listview
@@ -81,7 +92,7 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" type="text/stylus">
+<style lang="stylus" rel="stylesheet/stylus" type="text/stylus" scoped>
   .singer {
     position: fixed
     top: 88px

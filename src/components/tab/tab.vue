@@ -1,6 +1,6 @@
 <template>
   <div class="tab">
-    <router-link tag="div" class="tab-item" to="/recommend">
+    <router-link tag="div" class="tab-item" to="/Recommend">
       <span class="tab-link">推荐</span>
     </router-link>
     <router-link tag="div" class="tab-item" to="/singer">
@@ -19,7 +19,7 @@
   export default {}
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus" type="text/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus" type="text/stylus" scoped>
   @import "~common/stylus/variable"
   .tab {
     display: flex

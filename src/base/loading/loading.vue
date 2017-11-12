@@ -14,7 +14,7 @@
     }
   }
 </script>
-<style scoped lang="stylus" rel="stylesheet/stylus" type="text/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus" type="text/stylus" scoped>
   @import "~common/stylus/variable"
 
   .loading
