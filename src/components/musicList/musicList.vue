@@ -37,12 +37,14 @@
   import songlist from 'base/songlist/songlist'
   import {prefixStyle} from 'common/js/dom'
   import {mapActions} from 'vuex'
+  import {playlistMixin} from 'common/js/mixin'
 
   const RESERVED_HEIGHT = 40
   const transform = prefixStyle('transform')
   const backdrop = prefixStyle('backdrop-filter')
 
   export default {
+    mixins: [playlistMixin],
     data() {
       return {
         scrollY: 0
@@ -81,7 +83,7 @@
       this.$refs.list.$el.style.top = `${this.imageHeight}px`
     },
     methods: {
-      handlePlaylist(playlist) {
+      handlePlaylist(playlist) {         // 当出现迷你播放器的时候，让列表的bottom为60px
         const bottom = playlist.length > 0 ? '60px' : ''
         this.$refs.list.$el.style.bottom = bottom
         this.$refs.list.refresh()
@@ -93,15 +95,15 @@
         this.$router.back()
       },
       selectItem(item, index) {
-        this.selectPlay({
+        this.selectPlay({           // 将数据提交到vuex的action中
           list: this.songs,
           index
         })
       },
       random() {
-//        this.randomPlay({
-//          list: this.songs
-//        })
+        this.randomPlay({          // 当点击歌曲列表上的随机播放全部时，重新把数据提交到action上
+          list: this.songs
+        })
       },
       ...mapActions([
         'selectPlay',

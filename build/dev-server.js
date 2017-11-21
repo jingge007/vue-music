@@ -55,7 +55,7 @@ apiRoutes.get('/lyric', function (req, res) {
     var ret = response.data
     if (typeof ret === 'string') {
       var reg = /^\w+\(({[^()]+})\)$/
-      var matches = ret.match(reg)
+      var matches = ret.match(reg)          // match() 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。
       if (matches) {
         ret = JSON.parse(matches[1])
       }

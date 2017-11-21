@@ -18,13 +18,13 @@
       </li>
     </ul>
     <div class="list-shortcut"
-         @touchstart="onShortcutTouchStart"
+         @touchstart.stop.prevent="onShortcutTouchStart"
          @touchmove.stop.prevent="onShortcutTouchMove"
     >
       <ul>
         <li v-for="(item,index) in shortcutList"
             class="item"
-            :class="{current:currentIndex===index}"
+            :class="{'current':currentIndex===index}"
             :data-index="index">
           {{item}}
         </li>
@@ -94,9 +94,12 @@
       onShortcutTouchMove(e) {
         let firstTouch = e.touches[0]
         this.touch.y2 = firstTouch.pageY
-        let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT
+        let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
         let anchorIndex = parseInt(this.touch.anchorIndex) + delta
         this._scrollTo(anchorIndex)
+      },
+      refresh() {
+        this.$refs.listview.refresh()
       },
       scroll(pos) {
         this.scrollY = pos.y

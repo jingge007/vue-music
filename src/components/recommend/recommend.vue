@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" ref="recommend">
     <scroll class="recommend-content" :data="discLists" ref="scroll">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
@@ -39,8 +39,10 @@
   import {ERR_OK} from 'api/config'
   import {getRecommend, getDiscList} from 'api/recommend'
   import slider from 'base/slider/slider'
+  import {playlistMixin} from 'common/js/mixin'
 
   export default {
+    mixins: [playlistMixin],
     data() {
       return {
         recommends: [],
@@ -52,6 +54,11 @@
       this._getDiscList()
     },
     methods: {
+      handlePlaylist(playlist) {
+        const bottom = playlist.length > 0 ? '60px' : ''
+        this.$refs.recommend.style.bottom = bottom
+        this.$refs.scroll.refresh()
+      },
       _getRecommend() {
         getRecommend().then((res) => {
           if (res.code === ERR_OK) {
@@ -65,8 +72,8 @@
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {
             this.discLists = res.data.list
-           // let bbb = res.data.list
-           // console.log(bbb)
+            // let bbb = res.data.list
+            // console.log(bbb)
           }
         })
       },
