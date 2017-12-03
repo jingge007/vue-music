@@ -11,3 +11,9 @@ export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST'  // 定义顺序播放歌�
 export const SET_PLAY_MODE = 'SET_PLAY_MODE'   // 定义播放器为顺序播放模式
 
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'    // 定义当前播放歌曲的索引
+
+export const SET_DISC = 'SET_DISC'
+
+export const SET_TOP_LIST = 'SET_TOP_LIST'
+
+export const SET_SEARCH_HISTORY = 'SET_SEARCH_HISTORY'

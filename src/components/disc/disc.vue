@@ -5,7 +5,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getSingerDetail} from 'api/singer'
+  import {getDiscList} from 'api/recommend.js'
   import {ERR_OK} from 'api/config'
   import {mapGetters} from 'vuex'
   import {createSong} from 'common/js/song'
@@ -19,35 +19,34 @@
     },
     computed: {
       ...mapGetters([
-        'singer'
+        'disc'
       ]),
       title() {
-        return this.singer.name
+        return this.disc.dissname
       },
       bgImage() {
-        return this.singer.avatar
+        return this.disc.imgurl
       }
     },
     created() {
-      this._getDetail()
+      this._getDiscList()
     },
     methods: {
-      _getDetail() {
-        if (!this.singer.id) {
-          this.$router.push('/singer')
+      _getDiscList() {
+        if (!this.disc.dissid) {
+          this.$router.push('/Recommend')
           return
         }
-        getSingerDetail(this.singer.id).then((res) => {
+        getDiscList(this.disc.dissid).then((res) => {
           if (res.code === ERR_OK) {
-            this.songs = this._normalizeSongs(res.data.list)
-            // console.log(this.songs)
+            this.songs = this._normalizeSongs(res.cdlist[0].songlist)
+            console.log(this.songs)
           }
         })
       },
       _normalizeSongs(list) {
         let ret = []
-        list.forEach((item) => {
-          let {musicData} = item
+        list.forEach((musicData) => {
           if (musicData.songid && musicData.albummid) {
             ret.push(createSong(musicData))
           }

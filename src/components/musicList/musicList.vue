@@ -64,8 +64,8 @@
         default: []
       },
       rank: {
-        type: String,
-        default: ''
+        type: Boolean,
+        default: false
       }
     },
     computed: {
